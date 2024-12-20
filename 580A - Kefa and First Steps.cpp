@@ -13,7 +13,7 @@ int main() {
   vector<int> arr(n);
   inputarr(arr, n);
 
-  int maxi = 0, cnt = 1;
+  int maxi = 1, cnt = 1;
   fo(i, n - 1) {
     if (arr[i + 1] >= arr[i])
       cnt++;
