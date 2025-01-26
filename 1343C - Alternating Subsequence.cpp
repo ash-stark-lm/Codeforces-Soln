@@ -15,22 +15,6 @@ using namespace std;
   vector<int> v(n);                                                            \
   inputarr(v, n);
 
-int countGoodPairs(vector<int> &arr) {
-  int n = arr.size();
-  int count = 0;
-
-  // Iterate over all pairs (i, j) with i < j
-  for (int i = 0; i < n; i++) {
-    for (int j = i + 1; j < n; j++) {
-      if (__gcd(arr[i], 2 * arr[j]) > 1) {
-        count++;
-      }
-    }
-  }
-
-  return count;
-}
-
 signed main() {
   ios::sync_with_stdio(0);
   cin.tie(NULL);
@@ -40,29 +24,21 @@ signed main() {
   while (t--) {
     int n;
     cin >> n;
-    vi(n);
-
-    vector<int> even;
-    vector<int> odd;
-    fo(i, n) {
-      if (v[i] % 2 == 0)
-        even.pb(v[i]);
-      else
-        odd.pb(v[i]);
-    }
-    int e = even.size();
-    int o = n - e;
+    vector<int> arr(n);
+    inputarr(arr, n);
 
     int ans = 0;
-    // pairs by taking one from even and one from odd
-    ans += e * o;
-
-    // pairs by taking both from even as gcd of two even number is always >=2;
-    ans += e * (e - 1) / 2; // nc2
-
-    // pairs by taking both from odd side;
-    int cnt = countGoodPairs(odd);
-    ans += cnt;
+    fo(i, n) {
+      int maxi = LLONG_MIN;
+      int j = i;
+      while (j < n &&
+             ((arr[j] > 0 && arr[i] > 0) || (arr[j] < 0 && arr[i] < 0))) {
+        maxi = max(maxi, arr[j]);
+        j++;
+      }
+      ans += maxi;
+      i = j - 1;
+    }
     cout << ans << endl;
   }
   return 0;
